@@ -223,12 +223,9 @@ a language server instance."
     (let* ((normalize (lambda (dir) (abbreviate-file-name (file-truename dir))))
            (roots (mapcar normalize lean4-workspace-roots))
            (excls (mapcar normalize lean4-workspace-exclusions))
-           (ignore-case (file-name-case-insensitive-p file-name))
            (contains (lambda (file-name list)
                        (seq-some (lambda (f)
-                                   (if ignore-case
-                                       (string-equal-ignore-case file-name f)
-                                     (string-equal file-name f)))
+                                   (file-equal-p file-name f))
                                  list)))
            root
            excluded)
