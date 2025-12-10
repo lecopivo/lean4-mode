@@ -46,7 +46,18 @@
   "Call lake build."
   (interactive)
   (let ((default-directory (file-name-as-directory (lean4-lake-find-dir-safe))))
-    (compile (concat (lean4-get-executable lean4-lake-name) " build"))))
+    (compile (concat (lean4-get-executable lean4-lake-name) " build --no-ansi"))))
+
+(defun lean4-lake-build-buffer-file ()
+  "Call lake build on the current buffer file."
+  (interactive)
+  (let* ((default-directory (file-name-as-directory (lean4-lake-find-dir-safe)))
+         (relative-path (file-relative-name buffer-file-name default-directory))
+         (module-name (replace-regexp-in-string
+                       "/" "."
+                       (file-name-sans-extension relative-path))))
+    (compile (concat (lean4-get-executable lean4-lake-name)
+                     " build " module-name " --no-ansi"))))
 
 (provide 'lean4-lake)
 ;;; lean4-lake.el ends here
