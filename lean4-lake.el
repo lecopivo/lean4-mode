@@ -48,6 +48,12 @@
   (let ((default-directory (file-name-as-directory (lean4-lake-find-dir-safe))))
     (compile (concat (lean4-get-executable lean4-lake-name) " build --no-ansi"))))
 
+(defun lean4-lake-test ()
+  "Call lake build."
+  (interactive)
+  (let ((default-directory (file-name-as-directory (lean4-lake-find-dir-safe))))
+    (compile (concat (lean4-get-executable lean4-lake-name) " test --no-ansi"))))
+
 (defun lean4-lake-build-buffer-file ()
   "Call lake build on the current buffer file."
   (interactive)
